@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="ngInstagram">
 <head>
 	<meta charset="UTF-8">
 	<title>ng-Instagram</title>
+	<link rel="stylesheet" href="css/styles.css">
+	<script src="angular/angular.js"></script>
+	<script src="app.js"></script>
 </head>
-<body>
-	
+<body ng-controller="appController">
+	<header>
+		<img src="images/ng-instagram.png" alt="Instagram Searcher">
+	</header>
+	<section class="search-section">
+		<form ng-submit="">
+			<input type="text" placeholder="Enter a tag to search">
+			<input class="btn" type="submit" value="Submit">
+		</form>
+	</section>
+	<section class="results-section">
+		
+	</section>
 </body>
 </html>
