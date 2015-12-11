@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<title>ng-Instagram</title>
 	<link rel="stylesheet" href="css/styles.css">
-	<script src="angular/angular.js"></script>
+	<script src="angular/angular.min.js"></script>
 	<script src="app.js"></script>
 </head>
 <body ng-controller="appController">
@@ -12,13 +12,17 @@
 		<img src="images/ng-instagram.png" alt="Instagram Searcher">
 	</header>
 	<section class="search-section">
-		<form ng-submit="">
-			<input type="text" placeholder="Enter a tag to search">
-			<input class="btn" type="submit" value="Submit">
-		</form>
+		<input type="text" placeholder="Enter a tag to search" ng-model="tag">
+		<input class="btn" type="button" value="Submit"
+		ng-click="getData()">
+			<input class="btn" type="button" value="Authenticate"
+		ng-click="getAccessToken()">
+		<a ng-href="{{authorizeUrl}}">Authorize</a>
 	</section>
 	<section class="results-section">
-		
+		<p id="result-description"
+		ng-model="resultDescription"></p>
+		<div ng-repeat="result in results"></div>
 	</section>
 </body>
 </html>
