@@ -1,20 +1,29 @@
 angular.module("ngInstagram", [])
+.run(function ($rootScope) {
+	//How to we prevent an infinite redirect loop if an access token is not granted?
+	var parameter_name = 'access_token=',
+		hash = window.location.hash;
+		if (hash.indexOf(parameter_name) === -1) {
+			//no access token
+			$rootScope.clientId = 'dbb9284fb3b14907a08892f69809e575';
+			$rootScope.redirectUrl = 'http://localhost:8080/ngInstagram/index.html';
+			$rootScope.authorizeUrl = "https://api.instagram.com/oauth/authorize/?client_id=" + $rootScope.clientId + "&redirect_uri=" + $rootScope.redirectUrl + "&response_type=token&scope=public_content";
+			window.location = authorizeUrl;
+		}
+		$rootScope.accessToken = hash.substring(hash.indexOf(parameter_name)+parameter_name.length);
+})
 .controller("appController", ["$scope", "$http", function($scope, $http){
-	$scope.results = [];
-	$scope.clientId = 'dbb9284fb3b14907a08892f69809e575';
-	$scope.clientSecret ='1995809cb97147f6a1a9be556a65a9ba';
-	$scope.redirectUrl = 'http://localhost:8080/ngInstagram/index.html';
-	$scope.authorizeUrl = "https://api.instagram.com/oauth/authorize/?client_id=" + $scope.clientId + "&redirect_uri=" + $scope.redirectUrl + "&response_type=token&scope=public_content";
-
 	$scope.getData = function(){
+		//QUESTION: Why aren't the root scope values available from the run function?
 		var parameter_name = 'access_token=',
 		hash = window.location.hash;
-
-		if (!hash.indexOf(parameter_name)) {
+		if (hash.indexOf(parameter_name) === -1) {
 			//no access token
+			//we should show an 'unauthorized' error, but it would never get here because of the redirect in run()
 			return;
 		}
 		$scope.accessToken = hash.substring(hash.indexOf(parameter_name)+parameter_name.length);
+
 		var endpointUrl = "https://api.instagram.com/v1/tags/" + $scope.tag + "/media/recent";
 		var config = {
 			params: {
@@ -49,7 +58,6 @@ angular.module("ngInstagram", [])
                 res = sParameterName[1];
             }
         }
-
         return res;
 	}
 }]);

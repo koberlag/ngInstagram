@@ -15,14 +15,13 @@
 		<input type="text" placeholder="Enter a tag to search" ng-model="tag">
 		<input class="btn" type="button" value="Submit"
 		ng-click="getData()">
-			<input class="btn" type="button" value="Authenticate"
-		ng-click="getAccessToken()">
-		<a ng-href="{{authorizeUrl}}">Authorize</a>
 	</section>
 	<section class="results-section">
 		<p id="result-description"
 		ng-model="resultDescription"></p>
-		<div ng-repeat="result in results"></div>
+		<div ng-repeat="result in results">
+			<img ng-src="{{result.images.low_resolution.url}}" alt="">
+		</div>
 	</section>
 </body>
 </html>
